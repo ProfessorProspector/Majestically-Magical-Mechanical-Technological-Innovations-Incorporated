@@ -1,0 +1,87 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven {url = "http://files.minecraftforge.net/maven"}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+	}
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = mcver + "-" + modver + "-unknownbuild"
+
+def ENV = System.getenv()
+if (ENV.BUILD_NUMBER) {
+	version = mcver + "-" + modver + "-" + "${System.getenv().BUILD_NUMBER}"
+}
+
+group = prefix + "." + id
+archivesBaseName = jarname
+
+sourceCompatibility = targetCompatibility = "1.8"
+compileJava {
+	sourceCompatibility = targetCompatibility = "1.8"
+}
+
+minecraft {
+	version = mcver + "-" + forgever
+	runDir = "run"
+	mappings = mcp
+
+	replace '%version%', modver
+}
+
+
+repositories {
+	maven {
+		// RebornCore
+		name = "Modmuss50"
+		url = "http://maven.modmuss50.me/"
+	}
+
+	maven {
+		// JEI
+		name = "prog"
+		url = "http://dvs1.progwml6.com/files/maven"
+	}
+
+	maven {
+		// HWYLA
+		name "TehNut"
+		url "http://tehnut.info/maven/"
+	}
+}
+
+dependencies {
+	compile "RebornCore:RebornCore-1.11.2:+:dev"
+	compile jeiver
+	compile hwylaver
+}
+
+processResources
+	{
+		inputs.property "modid", id
+		inputs.property "modname", displayname
+		inputs.property "desc", moddesc
+		inputs.property "version", modver
+		inputs.property "forgeversion", mcver + "-" + forgever
+		inputs.property "url", modurl
+		inputs.property "authors", modauthors
+
+		from(sourceSets.main.resources.srcDirs) {
+
+			include 'mcmod.info'
+
+			expand 'modid': id,
+				'modname': displayname,
+				'desc': moddesc,
+				'version': modver,
+				'forgeversion': mcver + "-" + forgever,
+				'url': modurl,
+				'authors': modauthors
+		}
+
+		from(sourceSets.main.resources.srcDirs) {exclude 'mcmod.info'}
+
+	}
