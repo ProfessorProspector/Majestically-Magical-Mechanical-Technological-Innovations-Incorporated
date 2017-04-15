@@ -4,23 +4,23 @@
     "transform": "forge:default-block",
     "model": "routiduct:neutral_routiduct",
     "textures": {
-      "texture": "routiduct:blocks/routiduct",
-      "particle": "routiduct:blocks/routiduct"
+      "texture": "routiduct:blocks/routiduct2",
+      "particle": "routiduct:blocks/routiduct2"
     }
   },
   "variants": {
     "inventory": {
       "transform": "forge:default-block",
       "textures": {
-        "texture": "routiduct:blocks/routiduct",
-        "particle": "routiduct:blocks/routiduct"
+        "texture": "routiduct:blocks/routiduct2",
+        "particle": "routiduct:blocks/routiduct2"
       }
     },
     "inventory": {
       "model": "routiduct:neutral_routiduct",
       "textures": {
-        "texture": "routiduct:blocks/routiduct",
-        "particle": "routiduct:blocks/routiduct"
+        "texture": "routiduct:blocks/routiduct2",
+        "particle": "routiduct:blocks/routiduct2"
       }
     },
     "axis=neutral": {

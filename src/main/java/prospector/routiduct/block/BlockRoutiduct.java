@@ -110,7 +110,76 @@ public class BlockRoutiduct extends BlockCL {
 
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		IBlockState north = world.getBlockState(pos.north());
+		IBlockState south = world.getBlockState(pos.south());
+		IBlockState east = world.getBlockState(pos.east());
+		IBlockState west = world.getBlockState(pos.west());
+		IBlockState up = world.getBlockState(pos.up());
+		IBlockState down = world.getBlockState(pos.down());
+		IBlockState xState = getDefaultState().withProperty(AXIS, EnumAxis.X);
+		IBlockState yState = getDefaultState().withProperty(AXIS, EnumAxis.Y);
+		IBlockState zState = getDefaultState().withProperty(AXIS, EnumAxis.Z);
+		if (areTwoSidesCompatible(east, west, xState)) {
+			world.setBlockState(pos.east(), xState);
+			world.setBlockState(pos.west(), xState);
+			return xState;
+		} else if (areTwoSidesCompatible(north, south, zState)) {
+			world.setBlockState(pos.north(), zState);
+			world.setBlockState(pos.south(), zState);
+			return zState;
+		} else if (areTwoSidesCompatible(up, down, yState)) {
+			world.setBlockState(pos.up(), yState);
+			world.setBlockState(pos.down(), yState);
+			return yState;
+		} else if (areTwoSidesCompatible(east, west, xState)) {
+			world.setBlockState(pos.east(), xState);
+			world.setBlockState(pos.west(), xState);
+			return xState;
+		} else if (areTwoSidesCompatible(north, south, zState)) {
+			world.setBlockState(pos.north(), zState);
+			world.setBlockState(pos.south(), zState);
+			return zState;
+		} else if (areTwoSidesCompatible(up, down, yState)) {
+			world.setBlockState(pos.up(), yState);
+			world.setBlockState(pos.down(), yState);
+			return yState;
+		} else if (isSideCompatible(east, xState)) {
+			world.setBlockState(pos.east(), xState);
+			return xState;
+		} else if (isSideCompatible(west, xState)) {
+			world.setBlockState(pos.west(), xState);
+			return xState;
+		} else if (isSideCompatible(north, zState)) {
+			world.setBlockState(pos.north(), zState);
+			return zState;
+		} else if (isSideCompatible(south, zState)) {
+			world.setBlockState(pos.south(), zState);
+			return zState;
+		} else if (isSideCompatible(up, yState)) {
+			world.setBlockState(pos.up(), yState);
+			return yState;
+		} else if (isSideCompatible(down, yState)) {
+			world.setBlockState(pos.down(), yState);
+			return yState;
+		}
+
 		return getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
+	}
+
+	public boolean areTwoSidesCompatible(IBlockState firstState, IBlockState secondState, IBlockState directionState) {
+		IBlockState neutralState = getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
+		if ((firstState.equals(directionState) || firstState.equals(neutralState)) && (secondState.equals(directionState) || secondState.equals(neutralState))) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isSideCompatible(IBlockState state, IBlockState directionState) {
+		IBlockState neutralState = getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
+		if ((state.equals(directionState) || state.equals(neutralState))) {
+			return true;
+		}
+		return false;
 	}
 
 	public enum EnumAxis implements IStringSerializable {
