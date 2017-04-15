@@ -1,0 +1,5 @@
+itemGroup.routiduct=Routiduct
+item.crystek:wrench.name=Routiduct Wrench
+
+tile.routiduct:routiduct.rd1.name=Routiduct (RD1 Protocol)
+tile.routiduct:routiduct.rd2.name=Routiduct (RD2 Protocol)

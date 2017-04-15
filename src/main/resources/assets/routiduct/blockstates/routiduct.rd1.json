@@ -1,0 +1,50 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block",
+    "model": "routiduct:neutral_routiduct",
+    "textures": {
+      "texture": "routiduct:blocks/routiduct",
+      "particle": "routiduct:blocks/routiduct"
+    }
+  },
+  "variants": {
+    "inventory": {
+      "transform": "forge:default-block",
+      "textures": {
+        "texture": "routiduct:blocks/routiduct",
+        "particle": "routiduct:blocks/routiduct"
+      }
+    },
+    "inventory": {
+      "model": "routiduct:neutral_routiduct",
+      "textures": {
+        "texture": "routiduct:blocks/routiduct",
+        "particle": "routiduct:blocks/routiduct"
+      }
+    },
+    "axis": {
+      "neutral": {
+        "model": "routiduct:neutral_routiduct",
+        "textures": {
+        }
+      },
+      "x": {
+        "model": "routiduct:routiduct",
+        "textures": {
+        }
+      },
+      "y": {
+        "model": "routiduct:vertical_routiduct",
+        "textures": {
+        }
+      },
+      "z": {
+        "model": "routiduct:routiduct",
+        "y": 90,
+        "textures": {
+        }
+      }
+    }
+  }
+}
