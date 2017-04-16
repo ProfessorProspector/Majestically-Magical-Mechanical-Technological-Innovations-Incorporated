@@ -11,12 +11,6 @@
   "variants": {
     "inventory": {
       "transform": "forge:default-block",
-      "textures": {
-        "texture": "routiduct:blocks/routiduct",
-        "particle": "routiduct:blocks/routiduct"
-      }
-    },
-    "inventory": {
       "model": "routiduct:neutral_routiduct",
       "textures": {
         "texture": "routiduct:blocks/routiduct",

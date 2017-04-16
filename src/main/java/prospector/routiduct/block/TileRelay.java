@@ -1,13 +1,14 @@
 package prospector.routiduct.block;
 
 import net.minecraft.client.renderer.texture.ITickable;
-import net.minecraft.tileentity.TileEntity;
 
 /**
  * Created by Prospector
  */
-public class TileRoutiductBase extends TileEntity implements ITickable {
-	public TileRoutiductBase() {
+public class TileRelay extends TileRoutiductBase implements ITickable {
+
+	public TileRelay() {
+		super();
 	}
 
 	@Override

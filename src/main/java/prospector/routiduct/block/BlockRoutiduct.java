@@ -25,10 +25,12 @@ import reborncore.modcl.BlockCL;
 public class BlockRoutiduct extends BlockCL {
 
 	public static final PropertyEnum<EnumAxis> AXIS = PropertyEnum.<EnumAxis>create("axis", EnumAxis.class);
+	public final EnumProtocol protocol;
 
 	public BlockRoutiduct(EnumProtocol protocol) {
 		super(Routiduct.MOD_CL, "routiduct." + protocol.name.toLowerCase(), Material.IRON);
 		setHardness(0.5F);
+		this.protocol = protocol;
 	}
 
 	@Override
@@ -51,31 +53,8 @@ public class BlockRoutiduct extends BlockCL {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		if (pos.equals(getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL))) {
-			handleConnection(worldIn, pos, pos.east(), EnumAxis.X);
-			handleConnection(worldIn, pos, pos.west(), EnumAxis.X);
-			handleConnection(worldIn, pos, pos.north(), EnumAxis.Z);
-			handleConnection(worldIn, pos, pos.south(), EnumAxis.Z);
-			handleConnection(worldIn, pos, pos.up(), EnumAxis.Y);
-			handleConnection(worldIn, pos, pos.down(), EnumAxis.Y);
-		}
-	}
-
-	private void handleConnection(World world, BlockPos pos, BlockPos adjacentPos, EnumAxis axis) {
-		if (world.getBlockState(adjacentPos).equals(getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL))) {
-			world.setBlockState(pos, getDefaultState().withProperty(AXIS, axis));
-			world.setBlockState(adjacentPos, getDefaultState().withProperty(AXIS, axis));
-		}
-		if (world.getBlockState(adjacentPos).equals(getDefaultState().withProperty(AXIS, axis))) {
-			world.setBlockState(pos, getDefaultState().withProperty(AXIS, axis));
-			world.setBlockState(adjacentPos, getDefaultState().withProperty(AXIS, axis));
-		}
-	}
-
-	@Override
 	public int damageDropped(IBlockState state) {
-		return state.getValue(AXIS).getMetadata();
+		return getMetaFromState(getDefaultState());
 	}
 
 	@Override

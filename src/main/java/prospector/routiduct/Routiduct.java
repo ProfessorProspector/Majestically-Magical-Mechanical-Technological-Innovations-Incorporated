@@ -7,6 +7,10 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import prospector.routiduct.block.TilePackager;
+import prospector.routiduct.gui.RoutiductGuiHandler;
 import prospector.routiduct.init.RoutiductItems;
 import prospector.routiduct.init.RoutiductRegistry;
 import prospector.routiduct.proxy.RoutiductServer;
@@ -40,11 +44,13 @@ public class Routiduct extends ModCL {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		getRegistry().init(MOD_CL);
+		GameRegistry.registerTileEntity(TilePackager.class, "TilePackagerRD");
 		PROXY.registerRenders();
 	}
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
+		NetworkRegistry.INSTANCE.registerGuiHandler(MOD_CL, new RoutiductGuiHandler());
 	}
 
 	@Mod.EventHandler
