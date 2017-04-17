@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import prospector.routiduct.block.TilePackager;
+import prospector.routiduct.block.tiles.TilePackager;
 import prospector.routiduct.gui.RoutiductGuiHandler;
 import prospector.routiduct.init.RoutiductItems;
 import prospector.routiduct.init.RoutiductRegistry;

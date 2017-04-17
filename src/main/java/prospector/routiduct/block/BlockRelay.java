@@ -8,17 +8,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import prospector.routiduct.Routiduct;
 import prospector.routiduct.api.EnumProtocol;
 import reborncore.modcl.BlockCL;
-
-import javax.annotation.Nullable;
 
 /**
  * Created by Prospector
@@ -36,6 +34,7 @@ public class BlockRelay extends BlockCL {
 	public BlockRelay(EnumProtocol protocol) {
 		super(Routiduct.MOD_CL, "relay." + protocol.name.toLowerCase(), Material.IRON);
 		setHardness(0.5F);
+		setDefaultState(getDefaultState().withProperty(EAST, false).withProperty(WEST, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(UP, false).withProperty(DOWN, false));
 		this.protocol = protocol;
 	}
 
@@ -50,19 +49,34 @@ public class BlockRelay extends BlockCL {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean isFullBlock(IBlockState state) {
 		return false;
 	}
 
-	@Nullable
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
-		return new TileRelay();
+	@SuppressWarnings("deprecation")
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		IBlockState actualState = state;
+		if (worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockRoutiduct && worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.X || worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockUnpackager)
+			actualState = actualState.withProperty(EAST, true);
+		if (worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockRoutiduct && worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.X || worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockUnpackager)
+			actualState = actualState.withProperty(WEST, true);
+		if (worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockRoutiduct && worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.Z || worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockUnpackager)
+			actualState = actualState.withProperty(NORTH, true);
+		if (worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockRoutiduct && worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.Z || worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockUnpackager)
+			actualState = actualState.withProperty(SOUTH, true);
+		if (worldIn.getBlockState(pos.offset(EnumFacing.UP)).getBlock() instanceof BlockRoutiduct && worldIn.getBlockState(pos.offset(EnumFacing.UP)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.Y || worldIn.getBlockState(pos.offset(EnumFacing.UP)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.UP)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.UP)).getBlock() instanceof BlockUnpackager)
+			actualState = actualState.withProperty(UP, true);
+		if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRoutiduct && worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.Y || worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockUnpackager)
+			actualState = actualState.withProperty(DOWN, true);
+		return actualState;
 	}
 
 	@Override
@@ -71,6 +85,7 @@ public class BlockRelay extends BlockCL {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
@@ -82,6 +97,6 @@ public class BlockRelay extends BlockCL {
 
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(EAST, true);
+		return getDefaultState();
 	}
 }

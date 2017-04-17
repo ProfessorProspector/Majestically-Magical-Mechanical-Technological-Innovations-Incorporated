@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import prospector.routiduct.Routiduct;
 import prospector.routiduct.api.EnumProtocol;
 import prospector.routiduct.block.BlockPackager;
+import prospector.routiduct.block.BlockRelay;
 import prospector.routiduct.block.BlockRoutiduct;
 import prospector.routiduct.block.BlockUnpackager;
 import reborncore.modcl.BlockCL;
@@ -22,8 +23,8 @@ public class RoutiductBlocks {
 			addToRegistry(packager, "blockPackager", "packager" + protocol.name);
 			BlockUnpackager unpackager = new BlockUnpackager(protocol);
 			addToRegistry(unpackager, "blockUnpackager", "unpackager" + protocol.name);
-			//			BlockRelay relay = new BlockRelay(protocol);
-			//			addToRegistry(relay, "blockRelay", "relay" + protocol.name);
+			BlockRelay relay = new BlockRelay(protocol);
+			addToRegistry(relay, "blockRelay", "relay" + protocol.name);
 		}
 	}
 

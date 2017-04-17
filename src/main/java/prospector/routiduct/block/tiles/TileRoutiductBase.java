@@ -1,4 +1,4 @@
-package prospector.routiduct.block;
+package prospector.routiduct.block.tiles;
 
 import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.tileentity.TileEntity;

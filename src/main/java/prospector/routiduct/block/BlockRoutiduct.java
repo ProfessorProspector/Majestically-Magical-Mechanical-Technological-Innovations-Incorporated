@@ -123,22 +123,28 @@ public class BlockRoutiduct extends BlockCL {
 			world.setBlockState(pos.down(), yState);
 			return yState;
 		} else if (isSideCompatible(east, xState)) {
-			world.setBlockState(pos.east(), xState);
+			if (world.getBlockState(pos.east()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.east(), xState);
 			return xState;
 		} else if (isSideCompatible(west, xState)) {
-			world.setBlockState(pos.west(), xState);
+			if (world.getBlockState(pos.west()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.west(), xState);
 			return xState;
 		} else if (isSideCompatible(north, zState)) {
-			world.setBlockState(pos.north(), zState);
+			if (world.getBlockState(pos.north()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.north(), zState);
 			return zState;
 		} else if (isSideCompatible(south, zState)) {
-			world.setBlockState(pos.south(), zState);
+			if (world.getBlockState(pos.south()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.south(), zState);
 			return zState;
 		} else if (isSideCompatible(up, yState)) {
-			world.setBlockState(pos.up(), yState);
+			if (world.getBlockState(pos.up()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.up(), yState);
 			return yState;
 		} else if (isSideCompatible(down, yState)) {
-			world.setBlockState(pos.down(), yState);
+			if (world.getBlockState(pos.down()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.down(), yState);
 			return yState;
 		}
 
@@ -147,7 +153,7 @@ public class BlockRoutiduct extends BlockCL {
 
 	public boolean areTwoSidesCompatible(IBlockState firstState, IBlockState secondState, IBlockState directionState) {
 		IBlockState neutralState = getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
-		if ((firstState.equals(directionState) || firstState.equals(neutralState)) && (secondState.equals(directionState) || secondState.equals(neutralState))) {
+		if ((firstState.equals(directionState) || firstState.equals(neutralState) || directionState.getBlock() instanceof BlockRelay) && (secondState.equals(directionState) || secondState.equals(neutralState) || directionState.getBlock() instanceof BlockRelay)) {
 			return true;
 		}
 		return false;
@@ -155,7 +161,7 @@ public class BlockRoutiduct extends BlockCL {
 
 	public boolean isSideCompatible(IBlockState state, IBlockState directionState) {
 		IBlockState neutralState = getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
-		if ((state.equals(directionState) || state.equals(neutralState))) {
+		if ((state.equals(directionState) || state.equals(neutralState) || directionState.getBlock() instanceof BlockRelay)) {
 			return true;
 		}
 		return false;

@@ -1,4 +1,4 @@
-package prospector.routiduct.block;
+package prospector.routiduct.block.tiles;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -8,6 +8,8 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import prospector.routiduct.api.EnumProtocol;
+import prospector.routiduct.block.BlockPackager;
+import prospector.routiduct.block.BlockRoutiduct;
 import reborncore.common.util.Inventory;
 import reborncore.common.util.InventoryHelper;
 
@@ -25,7 +27,7 @@ public class TilePackager extends TileRoutiductBase implements ITickable {
 
 	@Override
 	public void update() {
-		System.out.println(protocol);
+		//		System.out.println(protocol);
 		if (protocol != ((BlockPackager) world.getBlockState(pos).getBlock()).protocol) {
 			protocol = ((BlockPackager) world.getBlockState(pos).getBlock()).protocol;
 		}
@@ -39,7 +41,7 @@ public class TilePackager extends TileRoutiductBase implements ITickable {
 			for (int i = 0; i < itemHandler.getSlots(); i++) {
 				ItemStack stack1 = itemHandler.getStackInSlot(i);
 				ItemStack extractedStack = itemHandler.extractItem(i, 1, true);
-				for (int j = 0; j < protocol.stacks; j++)
+				for (int j = 0; j < protocol.stacks; j++) {
 					if (inventory.isItemValidForSlot(j, extractedStack)) {
 						int amount = InventoryHelper.testInventoryInsertion(inventory, extractedStack, null);
 						if (amount > 0) {
@@ -48,6 +50,7 @@ public class TilePackager extends TileRoutiductBase implements ITickable {
 							InventoryHelper.insertItemIntoInventory(inventory, extractedStack);
 						}
 					}
+				}
 			}
 		}
 	}

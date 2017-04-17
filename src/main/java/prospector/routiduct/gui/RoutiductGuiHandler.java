@@ -5,7 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import prospector.routiduct.block.TilePackager;
+import prospector.routiduct.block.tiles.TilePackager;
 import prospector.routiduct.container.ContainerPackager;
 
 import javax.annotation.Nullable;
