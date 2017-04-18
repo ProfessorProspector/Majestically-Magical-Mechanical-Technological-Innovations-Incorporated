@@ -26,8 +26,8 @@ public class TilePackager extends TileRoutiductBase implements ITickable {
 	@Override
 	public void update() {
 		//		System.out.println(protocol);
-		if (protocol != ((BlockPackager) world.getBlockState(pos).getBlock()).protocol) {
-			protocol = ((BlockPackager) world.getBlockState(pos).getBlock()).protocol;
+		if (protocol != ((BlockPackager) world.getBlockState(pos).getBlock()).getProtocol()) {
+			protocol = ((BlockPackager) world.getBlockState(pos).getBlock()).getProtocol();
 		}
 		if (inventory.getStacks().length == protocol.stacks) {
 			return;

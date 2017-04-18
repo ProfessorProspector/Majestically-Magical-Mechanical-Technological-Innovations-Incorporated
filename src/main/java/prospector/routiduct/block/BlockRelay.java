@@ -1,5 +1,6 @@
 package prospector.routiduct.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -10,18 +11,21 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import prospector.routiduct.Routiduct;
+import prospector.routiduct.api.AxisUtils;
 import prospector.routiduct.api.EnumProtocol;
+import prospector.routiduct.api.IProtocolProvider;
 import reborncore.modcl.BlockCL;
 
 /**
  * Created by Prospector
  */
-public class BlockRelay extends BlockCL {
+public class BlockRelay extends BlockCL implements IProtocolProvider {
 
 	public static final PropertyBool EAST = PropertyBool.create("east");
 	public static final PropertyBool WEST = PropertyBool.create("west");
@@ -29,13 +33,18 @@ public class BlockRelay extends BlockCL {
 	public static final PropertyBool SOUTH = PropertyBool.create("south");
 	public static final PropertyBool UP = PropertyBool.create("up");
 	public static final PropertyBool DOWN = PropertyBool.create("down");
-	public final EnumProtocol protocol;
+	private final EnumProtocol protocol;
 
 	public BlockRelay(EnumProtocol protocol) {
 		super(Routiduct.MOD_CL, "relay." + protocol.name.toLowerCase(), Material.IRON);
 		setHardness(0.5F);
 		setDefaultState(getDefaultState().withProperty(EAST, false).withProperty(WEST, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(UP, false).withProperty(DOWN, false));
 		this.protocol = protocol;
+	}
+
+	@Override
+	public EnumProtocol getProtocol() {
+		return protocol;
 	}
 
 	@Override
@@ -64,20 +73,44 @@ public class BlockRelay extends BlockCL {
 	@SuppressWarnings("deprecation")
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
 		IBlockState actualState = state;
-		//FIX THIS SHIT
-		if (worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockRoutiduct && ((BlockRoutiduct) worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock()).protocol == protocol && worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.X || worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockUnpackager)
-			actualState = actualState.withProperty(EAST, true);
-		if (worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockRoutiduct && ((BlockRoutiduct) worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock()).protocol == protocol && worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.X || worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockUnpackager)
-			actualState = actualState.withProperty(WEST, true);
-		if (worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockRoutiduct && ((BlockRoutiduct) worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock()).protocol == protocol && worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.Z || worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockUnpackager)
-			actualState = actualState.withProperty(NORTH, true);
-		if (worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockRoutiduct && ((BlockRoutiduct) worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock()).protocol == protocol && worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.Z || worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockUnpackager)
-			actualState = actualState.withProperty(SOUTH, true);
-		if (worldIn.getBlockState(pos.offset(EnumFacing.UP)).getBlock() instanceof BlockRoutiduct && ((BlockRoutiduct) worldIn.getBlockState(pos.offset(EnumFacing.UP)).getBlock()).protocol == protocol && worldIn.getBlockState(pos.offset(EnumFacing.UP)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.Y || worldIn.getBlockState(pos.offset(EnumFacing.UP)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.UP)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.UP)).getBlock() instanceof BlockUnpackager)
-			actualState = actualState.withProperty(UP, true);
-		if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRoutiduct && ((BlockRoutiduct) worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock()).protocol == protocol && worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.Y || worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockRelay || worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockPackager || worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockUnpackager)
-			actualState = actualState.withProperty(DOWN, true);
+		for (EnumFacing facing : EnumFacing.values()) {
+			IBlockState offsetState = worldIn.getBlockState(pos.offset(facing));
+			Block offsetBlock = offsetState.getBlock();
+			if (offsetBlock instanceof IProtocolProvider && ((IProtocolProvider) offsetBlock).getProtocol() == protocol) {
+				if (offsetBlock instanceof BlockRoutiduct && offsetState.getValue(BlockRoutiduct.AXIS) == AxisUtils.getAxis(facing) ||
+					offsetBlock instanceof BlockRelay ||
+					offsetBlock instanceof BlockPackager && offsetState.getValue(BlockPackager.FACING) == facing.getOpposite() ||
+					offsetBlock instanceof BlockUnpackager && offsetState.getValue(BlockUnpackager.FACING) == facing.getOpposite()
+					)
+					actualState = actualState.withProperty(getProperty(facing), true);
+			}
+		}
 		return actualState;
+	}
+
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return new AxisAlignedBB(0, 0, 0, 1, 1, 1);
+		//		return new AxisAlignedBB(0.125, 0.125, 0.125, 0.875, 0.875, 0.875);
+	}
+
+	public IProperty<Boolean> getProperty(EnumFacing facing) {
+		switch (facing) {
+			case EAST:
+				return EAST;
+			case WEST:
+				return WEST;
+			case NORTH:
+				return NORTH;
+			case SOUTH:
+				return SOUTH;
+			case UP:
+				return UP;
+			case DOWN:
+				return DOWN;
+			default:
+				return EAST;
+		}
 	}
 
 	@Override

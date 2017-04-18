@@ -11,26 +11,36 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import prospector.routiduct.Routiduct;
 import prospector.routiduct.api.EnumProtocol;
+import prospector.routiduct.api.IProtocolProvider;
 import prospector.routiduct.item.ItemWrench;
 import reborncore.modcl.BlockCL;
+
+import static prospector.routiduct.api.AxisUtils.getAxis;
 
 /**
  * Created by Prospector
  */
-public class BlockRoutiduct extends BlockCL {
+public class BlockRoutiduct extends BlockCL implements IProtocolProvider {
 
 	public static final PropertyEnum<EnumAxis> AXIS = PropertyEnum.<EnumAxis>create("axis", EnumAxis.class);
-	public final EnumProtocol protocol;
+	private final EnumProtocol protocol;
 
 	public BlockRoutiduct(EnumProtocol protocol) {
 		super(Routiduct.MOD_CL, "routiduct." + protocol.name.toLowerCase(), Material.IRON);
 		setHardness(0.5F);
 		this.protocol = protocol;
+	}
+
+	@Override
+	public EnumProtocol getProtocol() {
+		return protocol;
 	}
 
 	@Override
@@ -169,16 +179,6 @@ public class BlockRoutiduct extends BlockCL {
 		return getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
 	}
 
-	public BlockRoutiduct.EnumAxis getAxis(EnumFacing facing) {
-		if (facing == EnumFacing.EAST || facing == EnumFacing.EAST) {
-			return BlockRoutiduct.EnumAxis.X;
-		} else if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
-			return BlockRoutiduct.EnumAxis.Z;
-		} else {
-			return BlockRoutiduct.EnumAxis.Y;
-		}
-	}
-
 	public boolean areTwoSidesCompatible(IBlockState firstState, IBlockState secondState, IBlockState directionState) {
 		if (isSideCompatible(firstState, directionState) && isSideCompatible(secondState, directionState)) {
 			return true;
@@ -186,22 +186,32 @@ public class BlockRoutiduct extends BlockCL {
 		return false;
 	}
 
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return state.getValue(AXIS).aabb;
+	}
+
 	public boolean isSideCompatible(IBlockState state, IBlockState directionState) {
 		IBlockState neutralState = getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
 		System.out.println(directionState);
-		if ((state.equals(directionState) || state.equals(neutralState) || state.getBlock() instanceof BlockRelay && ((BlockRelay) state.getBlock()).protocol == protocol || state.getBlock() instanceof BlockPackager && ((BlockPackager) state.getBlock()).protocol == protocol)) {
+		if ((state.equals(directionState) || state.equals(neutralState) || state.getBlock() instanceof BlockRelay && ((BlockRelay) state.getBlock()).getProtocol() == protocol || state.getBlock() instanceof BlockPackager && ((BlockPackager) state.getBlock()).getProtocol() == protocol)) {
 			return true;
 		}
 		return false;
 	}
 
 	public enum EnumAxis implements IStringSerializable {
-		X("x"), Y("y"), Z("z"), NEUTRAL("neutral");
+		X("x", new AxisAlignedBB(0, 0.25, 0.25, 1, 0.75, 0.75)),
+		Y("y", new AxisAlignedBB(0.25, 0, 0.25, 0.75, 1, 0.75)),
+		Z("z", new AxisAlignedBB(0.25, 0.25, 0, 0.75, 0.75, 1)),
+		NEUTRAL("neutral", new AxisAlignedBB(0.25, 0.25, 0.25, 0.75, 0.75, 0.75));
 
+		public final AxisAlignedBB aabb;
 		private String name;
 
-		EnumAxis(String name) {
+		EnumAxis(String name, AxisAlignedBB aabb) {
 			this.name = name;
+			this.aabb = aabb;
 		}
 
 		public static int getMetadata(EnumAxis axis) {

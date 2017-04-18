@@ -19,6 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import prospector.routiduct.Routiduct;
 import prospector.routiduct.api.EnumProtocol;
+import prospector.routiduct.api.IProtocolProvider;
 import prospector.routiduct.block.tiles.TilePackager;
 import prospector.routiduct.gui.EnumGui;
 import reborncore.modcl.BlockContainerCL;
@@ -28,15 +29,20 @@ import javax.annotation.Nullable;
 /**
  * Created by Prospector
  */
-public class BlockPackager extends BlockContainerCL {
+public class BlockPackager extends BlockContainerCL implements IProtocolProvider {
 	public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.<EnumFacing>create("facing", EnumFacing.class);
 	public static final PropertyBool CONNECTION = PropertyBool.create("connection");
-	public final EnumProtocol protocol;
+	private final EnumProtocol protocol;
 
 	public BlockPackager(EnumProtocol protocol) {
 		super(Routiduct.MOD_CL, "packager." + protocol.name.toLowerCase(), Material.IRON, TilePackager.class);
 		setHardness(0.5F);
 		this.protocol = protocol;
+	}
+
+	@Override
+	public EnumProtocol getProtocol() {
+		return protocol;
 	}
 
 	@Nullable
@@ -100,7 +106,7 @@ public class BlockPackager extends BlockContainerCL {
 
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		if (worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock() instanceof BlockRelay && ((BlockRelay) worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock()).protocol == protocol || worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock() instanceof BlockRoutiduct && ((BlockRoutiduct) worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock()).protocol == protocol && worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getValue(BlockRoutiduct.AXIS) == getAxis(worldIn, pos))
+		if (worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock() instanceof BlockRelay && ((BlockRelay) worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock()).getProtocol() == protocol || worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock() instanceof BlockRoutiduct && ((BlockRoutiduct) worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock()).getProtocol() == protocol && worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getValue(BlockRoutiduct.AXIS) == getAxis(worldIn, pos))
 			return state.withProperty(CONNECTION, true);
 		return state;
 	}
