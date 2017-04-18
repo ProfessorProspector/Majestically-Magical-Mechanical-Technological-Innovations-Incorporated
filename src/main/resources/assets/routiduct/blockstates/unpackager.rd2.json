@@ -2,20 +2,17 @@
 	"forge_marker": 1,
 	"defaults": {
 		"transform": "forge:default-block",
-		"model": "routiduct:packager",
+		"model": "routiduct:unpackager",
 		"textures": {
-			"routiduct": "routiduct:blocks/routiduct",
-			"front": "routiduct:blocks/packager_front",
-			"side": "routiduct:blocks/packager_side",
-			"back": "routiduct:blocks/packager_interface",
-			"particle": "routiduct:blocks/routiduct"
+			"routiduct": "routiduct:blocks/routiduct2",
+			"unpackager": "routiduct:blocks/unpackager2",
+			"particle": "routiduct:blocks/routiduct2"
 		}
 	},
 	"variants": {
 		"inventory": [
 			{
 				"transform": {
-
 					"gui": {
 						"rotation": [
 							{"x": 30}, {"y": 45}, {"z": 0}
@@ -66,13 +63,11 @@
 						"scale": 0.5
 					}
 				},
-				"model": "routiduct:packager",
+				"model": "routiduct:unpackager",
 				"textures": {
-					"routiduct": "routiduct:blocks/routiduct",
-					"front": "routiduct:blocks/packager_front",
-					"side": "routiduct:blocks/packager_side",
-					"back": "routiduct:blocks/packager_interface",
-					"particle": "routiduct:blocks/routiduct"
+					"routiduct": "routiduct:blocks/routiduct2",
+					"unpackager": "routiduct:blocks/unpackager2",
+					"particle": "routiduct:blocks/routiduct2"
 				}
 			}
 		],

@@ -1,6 +1,5 @@
 package prospector.routiduct.block.tiles;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -9,7 +8,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import prospector.routiduct.api.EnumProtocol;
 import prospector.routiduct.block.BlockPackager;
-import prospector.routiduct.block.BlockRoutiduct;
 import reborncore.common.util.Inventory;
 import reborncore.common.util.InventoryHelper;
 
@@ -52,37 +50,6 @@ public class TilePackager extends TileRoutiductBase implements ITickable {
 					}
 				}
 			}
-		}
-	}
-
-	public void updateState() {
-		IBlockState state = world.getBlockState(pos);
-		if (state.getValue(BlockPackager.CONNECTION) != validConnection())
-			world.setBlockState(pos, state.withProperty(BlockPackager.CONNECTION, true));
-
-	}
-
-	public boolean validConnection() {
-		IBlockState state = world.getBlockState(pos);
-		IBlockState behind = world.getBlockState(pos.offset(state.getValue(BlockPackager.FACING).getOpposite()));
-		if (behind.getBlock() instanceof BlockRoutiduct && (behind.getValue(BlockRoutiduct.AXIS) == getAxis() || behind.getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.NEUTRAL)) {
-			if (behind.getValue(BlockRoutiduct.AXIS) == BlockRoutiduct.EnumAxis.NEUTRAL) {
-				getWorld().setBlockState(pos.offset(state.getValue(BlockPackager.FACING).getOpposite()), behind.withProperty(BlockRoutiduct.AXIS, getAxis()));
-			}
-			return true;
-		}
-		return false;
-	}
-
-	public BlockRoutiduct.EnumAxis getAxis() {
-		IBlockState state = world.getBlockState(pos);
-		EnumFacing facing = state.getValue(BlockPackager.FACING);
-		if (facing == EnumFacing.EAST || facing == EnumFacing.EAST) {
-			return BlockRoutiduct.EnumAxis.X;
-		} else if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
-			return BlockRoutiduct.EnumAxis.Z;
-		} else {
-			return BlockRoutiduct.EnumAxis.Y;
 		}
 	}
 }

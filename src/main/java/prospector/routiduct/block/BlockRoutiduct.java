@@ -98,29 +98,47 @@ public class BlockRoutiduct extends BlockCL {
 		IBlockState xState = getDefaultState().withProperty(AXIS, EnumAxis.X);
 		IBlockState yState = getDefaultState().withProperty(AXIS, EnumAxis.Y);
 		IBlockState zState = getDefaultState().withProperty(AXIS, EnumAxis.Z);
-		if (areTwoSidesCompatible(east, west, xState)) {
-			world.setBlockState(pos.east(), xState);
-			world.setBlockState(pos.west(), xState);
+		if (isSideCompatible(east, xState) && getAxis(facing) == EnumAxis.X) {
+			if (world.getBlockState(pos.east()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.east(), xState);
 			return xState;
-		} else if (areTwoSidesCompatible(north, south, zState)) {
-			world.setBlockState(pos.north(), zState);
-			world.setBlockState(pos.south(), zState);
+		} else if (isSideCompatible(west, xState) && getAxis(facing) == EnumAxis.X) {
+			if (world.getBlockState(pos.west()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.west(), xState);
+			return xState;
+		} else if (isSideCompatible(north, zState) && getAxis(facing) == EnumAxis.Z) {
+			if (world.getBlockState(pos.north()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.north(), zState);
 			return zState;
-		} else if (areTwoSidesCompatible(up, down, yState)) {
-			world.setBlockState(pos.up(), yState);
-			world.setBlockState(pos.down(), yState);
+		} else if (isSideCompatible(south, zState) && getAxis(facing) == EnumAxis.Z) {
+			if (world.getBlockState(pos.south()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.south(), zState);
+			return zState;
+		} else if (isSideCompatible(up, yState) && getAxis(facing) == EnumAxis.Y) {
+			if (world.getBlockState(pos.up()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.up(), yState);
+			return yState;
+		} else if (isSideCompatible(down, yState) && getAxis(facing) == EnumAxis.Y) {
+			if (world.getBlockState(pos.down()).getBlock() instanceof BlockRoutiduct)
+				world.setBlockState(pos.down(), yState);
 			return yState;
 		} else if (areTwoSidesCompatible(east, west, xState)) {
-			world.setBlockState(pos.east(), xState);
-			world.setBlockState(pos.west(), xState);
+			if (world.getBlockState(pos.east()).getBlock() instanceof BlockRoutiduct && world.getBlockState(pos.east()).getValue(AXIS) != xState.getValue(AXIS))
+				world.setBlockState(pos.east(), xState);
+			if (world.getBlockState(pos.west()).getBlock() instanceof BlockRoutiduct && world.getBlockState(pos.west()).getValue(AXIS) != xState.getValue(AXIS))
+				world.setBlockState(pos.west(), xState);
 			return xState;
 		} else if (areTwoSidesCompatible(north, south, zState)) {
-			world.setBlockState(pos.north(), zState);
-			world.setBlockState(pos.south(), zState);
+			if (world.getBlockState(pos.north()).getBlock() instanceof BlockRoutiduct && world.getBlockState(pos.north()).getValue(AXIS) != zState.getValue(AXIS))
+				world.setBlockState(pos.north(), zState);
+			if (world.getBlockState(pos.south()).getBlock() instanceof BlockRoutiduct && world.getBlockState(pos.south()).getValue(AXIS) != zState.getValue(AXIS))
+				world.setBlockState(pos.south(), zState);
 			return zState;
 		} else if (areTwoSidesCompatible(up, down, yState)) {
-			world.setBlockState(pos.up(), yState);
-			world.setBlockState(pos.down(), yState);
+			if (world.getBlockState(pos.up()).getBlock() instanceof BlockRoutiduct && world.getBlockState(pos.up()).getValue(AXIS) != yState.getValue(AXIS))
+				world.setBlockState(pos.up(), yState);
+			if (world.getBlockState(pos.down()).getBlock() instanceof BlockRoutiduct && world.getBlockState(pos.down()).getValue(AXIS) != yState.getValue(AXIS))
+				world.setBlockState(pos.down(), yState);
 			return yState;
 		} else if (isSideCompatible(east, xState)) {
 			if (world.getBlockState(pos.east()).getBlock() instanceof BlockRoutiduct)
@@ -151,9 +169,18 @@ public class BlockRoutiduct extends BlockCL {
 		return getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
 	}
 
+	public BlockRoutiduct.EnumAxis getAxis(EnumFacing facing) {
+		if (facing == EnumFacing.EAST || facing == EnumFacing.EAST) {
+			return BlockRoutiduct.EnumAxis.X;
+		} else if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
+			return BlockRoutiduct.EnumAxis.Z;
+		} else {
+			return BlockRoutiduct.EnumAxis.Y;
+		}
+	}
+
 	public boolean areTwoSidesCompatible(IBlockState firstState, IBlockState secondState, IBlockState directionState) {
-		IBlockState neutralState = getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
-		if ((firstState.equals(directionState) || firstState.equals(neutralState) || directionState.getBlock() instanceof BlockRelay) && (secondState.equals(directionState) || secondState.equals(neutralState) || directionState.getBlock() instanceof BlockRelay)) {
+		if (isSideCompatible(firstState, directionState) && isSideCompatible(secondState, directionState)) {
 			return true;
 		}
 		return false;
@@ -161,7 +188,8 @@ public class BlockRoutiduct extends BlockCL {
 
 	public boolean isSideCompatible(IBlockState state, IBlockState directionState) {
 		IBlockState neutralState = getDefaultState().withProperty(AXIS, EnumAxis.NEUTRAL);
-		if ((state.equals(directionState) || state.equals(neutralState) || directionState.getBlock() instanceof BlockRelay)) {
+		System.out.println(directionState);
+		if ((state.equals(directionState) || state.equals(neutralState) || state.getBlock() instanceof BlockRelay && ((BlockRelay) state.getBlock()).protocol == protocol || state.getBlock() instanceof BlockPackager && ((BlockPackager) state.getBlock()).protocol == protocol)) {
 			return true;
 		}
 		return false;

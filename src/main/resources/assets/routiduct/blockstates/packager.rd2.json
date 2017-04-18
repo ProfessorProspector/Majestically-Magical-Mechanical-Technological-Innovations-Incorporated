@@ -4,11 +4,11 @@
 		"transform": "forge:default-block",
 		"model": "routiduct:packager",
 		"textures": {
-			"routiduct": "routiduct:blocks/routiduct",
-			"front": "routiduct:blocks/packager_front",
-			"side": "routiduct:blocks/packager_side",
-			"back": "routiduct:blocks/packager_interface",
-			"particle": "routiduct:blocks/routiduct"
+			"routiduct": "routiduct:blocks/routiduct2",
+			"front": "routiduct:blocks/packager_front2",
+			"side": "routiduct:blocks/packager_side2",
+			"back": "routiduct:blocks/packager_interface2",
+			"particle": "routiduct:blocks/routiduct2"
 		}
 	},
 	"variants": {
@@ -68,11 +68,11 @@
 				},
 				"model": "routiduct:packager",
 				"textures": {
-					"routiduct": "routiduct:blocks/routiduct",
-					"front": "routiduct:blocks/packager_front",
-					"side": "routiduct:blocks/packager_side",
-					"back": "routiduct:blocks/packager_interface",
-					"particle": "routiduct:blocks/routiduct"
+					"routiduct": "routiduct:blocks/routiduct2",
+					"front": "routiduct:blocks/packager_front2",
+					"side": "routiduct:blocks/packager_side2",
+					"back": "routiduct:blocks/packager_interface2",
+					"particle": "routiduct:blocks/routiduct2"
 				}
 			}
 		],

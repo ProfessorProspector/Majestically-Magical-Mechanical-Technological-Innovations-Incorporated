@@ -15,6 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import prospector.routiduct.Routiduct;
 import prospector.routiduct.api.EnumProtocol;
@@ -54,7 +55,7 @@ public class BlockPackager extends BlockContainerCL {
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
 	}
-	
+
 	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		return new ItemStack(this, 1, 0);
@@ -82,35 +83,42 @@ public class BlockPackager extends BlockContainerCL {
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		if (isEqual(state, EnumFacing.EAST, false))
+		if (isEqual(state, EnumFacing.EAST))
 			return 0;
-		else if (isEqual(state, EnumFacing.WEST, false))
+		else if (isEqual(state, EnumFacing.WEST))
 			return 1;
-		else if (isEqual(state, EnumFacing.NORTH, false))
+		else if (isEqual(state, EnumFacing.NORTH))
 			return 2;
-		else if (isEqual(state, EnumFacing.SOUTH, false))
+		else if (isEqual(state, EnumFacing.SOUTH))
 			return 3;
-		else if (isEqual(state, EnumFacing.UP, false))
+		else if (isEqual(state, EnumFacing.UP))
 			return 4;
-		else if (isEqual(state, EnumFacing.DOWN, false))
+		else if (isEqual(state, EnumFacing.DOWN))
 			return 5;
-		else if (isEqual(state, EnumFacing.EAST, true))
-			return 6;
-		else if (isEqual(state, EnumFacing.WEST, true))
-			return 7;
-		else if (isEqual(state, EnumFacing.NORTH, true))
-			return 8;
-		else if (isEqual(state, EnumFacing.SOUTH, true))
-			return 9;
-		else if (isEqual(state, EnumFacing.UP, true))
-			return 10;
-		else if (isEqual(state, EnumFacing.DOWN, true))
-			return 11;
 		return 0;
 	}
 
-	public boolean isEqual(IBlockState state, EnumFacing facingValue, boolean connectionValue) {
-		if (state.equals(getDefaultState().withProperty(FACING, facingValue).withProperty(CONNECTION, connectionValue))) {
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		if (worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock() instanceof BlockRelay && ((BlockRelay) worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock()).protocol == protocol || worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock() instanceof BlockRoutiduct && ((BlockRoutiduct) worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getBlock()).protocol == protocol && worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite())).getValue(BlockRoutiduct.AXIS) == getAxis(worldIn, pos))
+			return state.withProperty(CONNECTION, true);
+		return state;
+	}
+
+	public BlockRoutiduct.EnumAxis getAxis(IBlockAccess world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		EnumFacing facing = state.getValue(BlockPackager.FACING);
+		if (facing == EnumFacing.EAST || facing == EnumFacing.EAST) {
+			return BlockRoutiduct.EnumAxis.X;
+		} else if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
+			return BlockRoutiduct.EnumAxis.Z;
+		} else {
+			return BlockRoutiduct.EnumAxis.Y;
+		}
+	}
+
+	public boolean isEqual(IBlockState state, EnumFacing facingValue) {
+		if (state.equals(getDefaultState().withProperty(FACING, facingValue))) {
 			return true;
 		}
 		return false;
@@ -118,39 +126,29 @@ public class BlockPackager extends BlockContainerCL {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(FACING, getFacingFromMeta(meta)).withProperty(CONNECTION, getConnectionFromMeta(meta));
+		return this.getDefaultState().withProperty(FACING, getFacingFromMeta(meta));
 	}
 
 	public EnumFacing getFacingFromMeta(int meta) {
-		if (meta == 0 || meta == 6) {
+		if (meta == 0) {
 			return EnumFacing.EAST;
 		}
-		if (meta == 1 || meta == 7) {
+		if (meta == 1) {
 			return EnumFacing.WEST;
 		}
-		if (meta == 2 || meta == 8) {
+		if (meta == 2) {
 			return EnumFacing.NORTH;
 		}
-		if (meta == 3 || meta == 9) {
+		if (meta == 3) {
 			return EnumFacing.SOUTH;
 		}
-		if (meta == 4 || meta == 10) {
+		if (meta == 4) {
 			return EnumFacing.UP;
 		}
-		if (meta == 5 || meta == 11) {
+		if (meta == 5) {
 			return EnumFacing.DOWN;
 		}
 		return EnumFacing.EAST;
-	}
-
-	public boolean getConnectionFromMeta(int meta) {
-		if (meta >= 0 && meta <= 5) {
-			return false;
-		}
-		if (meta >= 6 && meta <= 11) {
-			return true;
-		}
-		return false;
 	}
 
 	@Override
