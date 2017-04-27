@@ -17,9 +17,9 @@ public class ContainerPackager extends ContainerRoutiductBase {
 		this.player = player;
 
 		drawPlayersInvAndHotbar(player, 8, 94);
-
-		for (int i = 0; i < tile.protocol.stacks; i++) {
-			this.addSlotToContainer(new BaseSlot(tile.inventory, i, 20 * i + 10, 10));
-		}
+		addSlotToContainer(new BaseSlot(tile.inventory, 0, 8, 31));
+		addSlotToContainer(new BaseSlot(tile.inventory, 1, 26, 31));
+		addSlotToContainer(new BaseSlot(tile.inventory, 2, 8, 49));
+		addSlotToContainer(new BaseSlot(tile.inventory, 3, 26, 49));
 	}
 }

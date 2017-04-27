@@ -26,15 +26,11 @@ package prospector.routiduct.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.client.config.GuiUtils;
 import prospector.routiduct.Routiduct;
+import prospector.routiduct.api.Package;
 import reborncore.client.guibuilder.GuiBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Prospector
@@ -51,6 +47,44 @@ public class RDBuilder extends GuiBuilder {
 		gui.drawTexturedModalRect(posX, posY, 150, 0, 18, 18);
 	}
 
+	public void drawProgress(GuiScreen gui, int progress, int maxProgress, int posX, int posY, Package.EnumColour colour) {
+		Minecraft.getMinecraft().getTextureManager().bindTexture(GUI_SHEET);
+		gui.drawTexturedModalRect(posX, posY, 168, 0, 28, 8);
+		int i = (int) ((double) progress / (double) maxProgress * 26);
+		if (i < 0)
+			i = 0;
+		gui.drawTexturedModalRect(posX + 1, posY + 1, 150, colour.ordinal() * 6 + 18, i, 6);
+		drawString(gui, getPercentage(maxProgress, progress) + "%", posX + 4, posY - 8, 0xFF000000);
+
+	}
+
+	public void drawOutputBar(GuiScreen gui, int progress, int maxProgress, int posX, int posY, Package.EnumColour colour) {
+		Minecraft.getMinecraft().getTextureManager().bindTexture(GUI_SHEET);
+		gui.drawTexturedModalRect(posX, posY, 0, 186, 90, 12);
+		int i = (int) ((double) progress / (double) maxProgress * 90);
+		if (i < 0)
+			i = 0;
+		gui.drawTexturedModalRect(posX + 1, posY + 1, 150, colour.ordinal() * 6 + 18, i, 6);
+		drawShadowString(gui, getPercentage(maxProgress, progress) + "%", posX + 4, posY - 8, 0xFF000000);
+
+	}
+
+	public void drawString(GuiScreen gui, String string, int x, int y) {
+		drawString(gui, string, x, y, 16777215);
+	}
+
+	public void drawString(GuiScreen gui, String string, int x, int y, int colour) {
+		gui.mc.fontRendererObj.drawString(string, x, y, colour);
+	}
+
+	public void drawShadowString(GuiScreen gui, String string, int x, int y) {
+		drawShadowString(gui, string, x, y, 16777215);
+	}
+
+	public void drawShadowString(GuiScreen gui, String string, int x, int y, int colour) {
+		gui.mc.fontRendererObj.drawStringWithShadow(string, x, y, colour);
+	}
+
 	public TextFormatting getPercentageColour(int percentage) {
 		if (percentage <= 10) {
 			return TextFormatting.RED;
@@ -61,7 +95,7 @@ public class RDBuilder extends GuiBuilder {
 		}
 	}
 
-	public int percentage(int MaxValue, int CurrentValue) {
+	public int getPercentage(int MaxValue, int CurrentValue) {
 		if (CurrentValue == 0)
 			return 0;
 		return (int) ((CurrentValue * 100.0f) / MaxValue);

@@ -92,7 +92,7 @@ public class BlockRelay extends BlockCL implements IProtocolProvider {
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 		//		return new AxisAlignedBB(0.125, 0.125, 0.125, 0.875, 0.875, 0.875);
-	}
+}
 
 	public IProperty<Boolean> getProperty(EnumFacing facing) {
 		switch (facing) {

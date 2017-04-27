@@ -37,6 +37,7 @@ public class BlockPackager extends BlockContainerCL implements IProtocolProvider
 	public BlockPackager(EnumProtocol protocol) {
 		super(Routiduct.MOD_CL, "packager." + protocol.name.toLowerCase(), Material.IRON, TilePackager.class);
 		setHardness(0.5F);
+		setDefaultState(getStateFromMeta(0));
 		this.protocol = protocol;
 	}
 
