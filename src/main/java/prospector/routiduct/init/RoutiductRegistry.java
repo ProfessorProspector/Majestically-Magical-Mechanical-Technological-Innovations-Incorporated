@@ -1,28 +1,22 @@
 package prospector.routiduct.init;
 
-import prospector.routiduct.Routiduct;
-import reborncore.modcl.*;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import prospector.routiduct.RoutiductConstants;
 
-/**
- * Created by Prospector
- */
-public class RoutiductRegistry extends RegistryCL {
+@Mod.EventBusSubscriber(modid = RoutiductConstants.MOD_ID)
+public class RoutiductRegistry {
 
-	public void init(ModCL mod) {
-		RoutiductItems.init();
-		RoutiductBlocks.init();
-
-		for (ItemCL item : Routiduct.MOD_CL.getRegistry().itemRegistry.values()) {
-			register(item);
-		}
-
-		for (BlockCL block : Routiduct.MOD_CL.getRegistry().blockRegistry.values()) {
-			register(block);
-		}
-
-		for (BlockContainerCL block : Routiduct.MOD_CL.getRegistry().blockContainerRegistry.values()) {
-			register(block);
-		}
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		RoutiductItems.init(event);
 	}
 
+	@SubscribeEvent
+	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		RoutiductBlocks.init(event);
+	}
 }

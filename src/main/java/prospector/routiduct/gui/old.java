@@ -20,26 +20,47 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+ *//*
+
 
 package prospector.routiduct.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.itemHandler.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import prospector.routiduct.Routiduct;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import prospector.routiduct.RoutiductConstants;
 import prospector.routiduct.api.Package;
-import reborncore.client.guibuilder.GuiBuilder;
 
+*/
 /**
  * Created by Prospector
- */
-public class RDBuilder extends GuiBuilder {
-	public static final ResourceLocation GUI_SHEET = new ResourceLocation(Routiduct.PREFIX + "textures/gui/gui_sheet.png");
+ *//*
 
-	public RDBuilder() {
-		super(GUI_SHEET);
+@SideOnly(Side.CLIENT)
+public class GuiAssembler {
+	public static final ResourceLocation GUI_SHEET = new ResourceLocation(RoutiductConstants.PREFIX + "textures/gui/gui_sheet.png");
+
+	public GuiScreen create(GuiBlueprints blueprints) {
+		return new GuiContainer() {
+			@Override
+			public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+				super.drawScreen(mouseX, mouseY, partialTicks);
+			}
+
+			@Override
+			protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+				super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+			}
+
+			@Override
+			protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+
+			}
+		};
 	}
 
 	public void drawSlot(GuiScreen gui, int posX, int posY) {
@@ -47,7 +68,7 @@ public class RDBuilder extends GuiBuilder {
 		gui.drawTexturedModalRect(posX, posY, 150, 0, 18, 18);
 	}
 
-	public void drawProgress(GuiScreen gui, int progress, int maxProgress, int posX, int posY, Package.EnumColour colour) {
+	public void drawProgress(GuiScreen gui, int progress, int maxProgress, int posX, int posY, Package.EnumColor colour) {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(GUI_SHEET);
 		gui.drawTexturedModalRect(posX, posY, 168, 0, 28, 8);
 		int i = (int) ((double) progress / (double) maxProgress * 26);
@@ -58,7 +79,7 @@ public class RDBuilder extends GuiBuilder {
 
 	}
 
-	public void drawOutputBar(GuiScreen gui, int progress, int maxProgress, int posX, int posY, Package.EnumColour colour) {
+	public void drawOutputBar(GuiScreen gui, int progress, int maxProgress, int posX, int posY, Package.EnumColor colour) {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(GUI_SHEET);
 		gui.drawTexturedModalRect(posX, posY, 0, 186, 90, 12);
 		int i = (int) ((double) progress / (double) maxProgress * 90);
@@ -101,3 +122,4 @@ public class RDBuilder extends GuiBuilder {
 		return (int) ((CurrentValue * 100.0f) / MaxValue);
 	}
 }
+*/

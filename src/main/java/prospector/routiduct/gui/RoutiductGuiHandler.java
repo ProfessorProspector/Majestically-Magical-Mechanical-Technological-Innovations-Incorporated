@@ -5,39 +5,30 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import prospector.routiduct.block.tiles.TilePackager;
-import prospector.routiduct.container.ContainerPackager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import prospector.routiduct.block.tiles.TileRoutiduct;
 
 import javax.annotation.Nullable;
 
-/**
- * Created by Prospector
- */
 public class RoutiductGuiHandler implements IGuiHandler {
 	@Nullable
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		EnumGui gui = EnumGui.values()[id];
 		TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-		switch (gui) {
-			case PACKAGER:
-				return new ContainerPackager((TilePackager) tile, player);
-			default:
-				break;
+		if (tile instanceof TileRoutiduct) {
+			return ((TileRoutiduct) tile).getContainer(player);
 		}
 		return null;
 	}
 
 	@Nullable
 	@Override
+	@SideOnly(Side.CLIENT)
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		EnumGui gui = EnumGui.values()[id];
 		TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-		switch (gui) {
-			case PACKAGER:
-				return new GuiPackager((TilePackager) tile, player);
-			default:
-				break;
+		if (tile instanceof TileRoutiduct) {
+			return new GuiRoutiduct(((TileRoutiduct) tile).getGuiBlueprint(), player);
 		}
 		return null;
 	}

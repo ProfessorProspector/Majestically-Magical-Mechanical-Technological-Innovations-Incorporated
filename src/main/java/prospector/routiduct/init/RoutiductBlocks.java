@@ -1,66 +1,49 @@
 package prospector.routiduct.init;
 
-import net.minecraft.item.ItemStack;
-import prospector.routiduct.Routiduct;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
+import prospector.routiduct.RoutiductConstants;
 import prospector.routiduct.api.EnumProtocol;
 import prospector.routiduct.block.BlockPackager;
 import prospector.routiduct.block.BlockRelay;
 import prospector.routiduct.block.BlockRoutiduct;
 import prospector.routiduct.block.BlockUnpackager;
-import reborncore.modcl.BlockCL;
-import reborncore.modcl.BlockContainerCL;
 
-/**
- * Created by Prospector
- */
 public class RoutiductBlocks {
 
-	public static void init() {
+	public static void init(RegistryEvent.Register<Block> event) {
 		for (EnumProtocol protocol : EnumProtocol.values()) {
 			BlockRoutiduct routiduct = new BlockRoutiduct(protocol);
-			addToRegistry(routiduct, "blockRoutiduct", "routiduct" + protocol.name);
+			register(routiduct, event, "blockRoutiduct", "routiduct" + protocol.name);
 			BlockPackager packager = new BlockPackager(protocol);
-			addToRegistry(packager, "blockPackager", "packager" + protocol.name);
+			register(packager, event, "blockPackager", "packager" + protocol.name);
 			BlockUnpackager unpackager = new BlockUnpackager(protocol);
-			addToRegistry(unpackager, "blockUnpackager", "unpackager" + protocol.name);
+			register(unpackager, event, "blockUnpackager", "unpackager" + protocol.name);
 			BlockRelay relay = new BlockRelay(protocol);
-			addToRegistry(relay, "blockRelay", "relay" + protocol.name);
+			register(relay, event, "blockRelay", "relay" + protocol.name);
 		}
 	}
 
-	protected static void addToRegistry(BlockCL block) {
-		addToRegistry(block.name.replaceFirst("^routiduct:", ""), block);
+	public static void register(Block block, RegistryEvent.Register<Block> event, String... oreNames) {
+		event.getRegistry().register(block);
+		ItemBlock itemBlock = new ItemBlock(block);
+		itemBlock.setRegistryName(block.getRegistryName());
+		ForgeRegistries.ITEMS.register(itemBlock);
+		for (String oreName : oreNames) {
+			OreDictionary.registerOre(oreName, block);
+		}
 	}
 
-	protected static void addToRegistry(String name, BlockCL block) {
-		Routiduct.MOD_CL.getRegistry().blockRegistry.put(name, block);
+	public Block getBlock(String name, EnumProtocol protocol) {
+		return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(RoutiductConstants.PREFIX, name + "." + protocol.name.toLowerCase()));
 	}
 
-	protected static void addToRegistry(BlockCL block, String... oreDictNames) {
-		addToRegistry(block.name.replaceFirst("^routiduct:", ""), block, oreDictNames);
-	}
-
-	protected static void addToRegistry(String name, BlockCL block, String... oreDictNames) {
-		addToRegistry(name, block);
-		for (String oreName : oreDictNames)
-			Routiduct.MOD_CL.getRegistry().oreEntries.put(new ItemStack(block), oreName);
-	}
-
-	protected static void addToRegistry(BlockContainerCL block) {
-		addToRegistry(block.name.replaceFirst("^routiduct:", ""), block);
-	}
-
-	protected static void addToRegistry(String name, BlockContainerCL block) {
-		Routiduct.MOD_CL.getRegistry().blockContainerRegistry.put(name, block);
-	}
-
-	protected static void addToRegistry(BlockContainerCL block, String... oreDictNames) {
-		addToRegistry(block.name.replaceFirst("^routiduct:", ""), block, oreDictNames);
-	}
-
-	protected static void addToRegistry(String name, BlockContainerCL block, String... oreDictNames) {
-		addToRegistry(name, block);
-		for (String oreName : oreDictNames)
-			Routiduct.MOD_CL.getRegistry().oreEntries.put(new ItemStack(block), oreName);
+	public Item getItem(String name, EnumProtocol protocol) {
+		return Item.getItemFromBlock(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(RoutiductConstants.PREFIX, name + "." + protocol.name.toLowerCase())));
 	}
 }

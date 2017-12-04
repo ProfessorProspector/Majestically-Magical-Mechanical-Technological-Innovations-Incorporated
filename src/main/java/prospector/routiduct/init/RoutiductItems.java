@@ -1,40 +1,23 @@
 package prospector.routiduct.init;
 
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import prospector.routiduct.Routiduct;
+import net.minecraft.item.Item;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.oredict.OreDictionary;
+import prospector.routiduct.item.ItemRD;
 import prospector.routiduct.item.ItemWrench;
-import reborncore.modcl.ItemCL;
 
-/**
- * Created by Prospector
- */
 public class RoutiductItems {
 
-	public static ItemCL WRENCH;
+	public static final ItemRD WRENCH = new ItemWrench();
 
-
-	public static void init() {
-		WRENCH = new ItemWrench();
-
-		addToRegistry(WRENCH, "itemWrench", "wrenchRoutiduct");
+	public static void init(RegistryEvent.Register<Item> event) {
+		register(WRENCH, event, "itemWrench", "wrenchRoutiduct");
 	}
 
-	protected static void addToRegistry(ItemCL item) {
-		addToRegistry(item.name.replaceFirst("^routiduct:", ""), item);
-	}
-
-	protected static void addToRegistry(String name, ItemCL item) {
-		Routiduct.MOD_CL.getRegistry().itemRegistry.put(name, item);
-	}
-
-	protected static void addToRegistry(ItemCL item, String... oreDictNames) {
-		addToRegistry(item.name.replaceFirst("^routiduct:", ""), item, oreDictNames);
-	}
-
-	protected static void addToRegistry(String name, ItemCL item, String... oreDictNames) {
-		addToRegistry(name, item);
-		for (String oreName : oreDictNames)
-			Routiduct.MOD_CL.getRegistry().oreEntries.put(new ItemStack(item), oreName);
+	public static void register(Item item, RegistryEvent.Register<Item> event, String... oreNames) {
+		event.getRegistry().register(item);
+		for (String oreName : oreNames) {
+			OreDictionary.registerOre(oreName, item);
+		}
 	}
 }

@@ -1,6 +1,5 @@
 package prospector.routiduct.block;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -14,23 +13,26 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import prospector.routiduct.Routiduct;
 import prospector.routiduct.api.EnumProtocol;
-import reborncore.modcl.BlockCL;
 
 /**
  * Created by Prospector
  */
-public class BlockUnpackager extends BlockCL {
+public class BlockUnpackager extends BlockRD {
 
 	public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.<EnumFacing>create("facing", EnumFacing.class);
 	public static final PropertyBool CONNECTION = PropertyBool.create("connection");
 	public final EnumProtocol protocol;
 
 	public BlockUnpackager(EnumProtocol protocol) {
-		super(Routiduct.MOD_CL, "unpackager." + protocol.name.toLowerCase(), Material.IRON);
+		super("unpackager." + protocol.name.toLowerCase());
 		setHardness(0.5F);
 		this.protocol = protocol;
+	}
+
+	@Override
+	public EnumProtocol getProtocol() {
+		return protocol;
 	}
 
 	@Override

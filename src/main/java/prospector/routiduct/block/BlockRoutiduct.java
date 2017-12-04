@@ -1,6 +1,5 @@
 package prospector.routiduct.block;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -16,24 +15,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import prospector.routiduct.Routiduct;
 import prospector.routiduct.api.EnumProtocol;
-import prospector.routiduct.api.IProtocolProvider;
 import prospector.routiduct.item.ItemWrench;
-import reborncore.modcl.BlockCL;
 
 import static prospector.routiduct.api.AxisUtils.getAxis;
 
 /**
  * Created by Prospector
  */
-public class BlockRoutiduct extends BlockCL implements IProtocolProvider {
+public class BlockRoutiduct extends BlockRD {
 
 	public static final PropertyEnum<EnumAxis> AXIS = PropertyEnum.<EnumAxis>create("axis", EnumAxis.class);
 	private final EnumProtocol protocol;
 
 	public BlockRoutiduct(EnumProtocol protocol) {
-		super(Routiduct.MOD_CL, "routiduct." + protocol.name.toLowerCase(), Material.IRON);
+		super("routiduct." + protocol.name.toLowerCase());
 		setHardness(0.5F);
 		this.protocol = protocol;
 	}

@@ -1,29 +1,24 @@
 package prospector.routiduct.proxy;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import prospector.routiduct.gui.GuiAssemblerS;
 
 /**
  * Created by Prospector
  */
 public class RoutiductServer {
-	public void registerRenders(){
+	public void preInit() {
 
 	}
 
-    public void registerItemModel(String modid, Item item, int meta, String id) {
+	public void init() {
 
-    }
+	}
 
-    public void registerCustomBlockStateLocation(Block block, String name) {
-        registerCustomBlockStateLocation(block, name, true);
-    }
+	public void postInit() {
 
-    public void registerCustomBlockStateLocation(Block block, String name, boolean item) {
+	}
 
-    }
-
-    public void registerCustomBlockStateLocation(Item item, String name) {
-
-    }
+	public GuiAssemblerS getGuiAssembler(){
+		return new GuiAssemblerS();
+	}
 }

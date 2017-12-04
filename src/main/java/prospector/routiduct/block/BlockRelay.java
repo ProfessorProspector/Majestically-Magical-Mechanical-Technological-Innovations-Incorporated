@@ -20,12 +20,11 @@ import prospector.routiduct.Routiduct;
 import prospector.routiduct.api.AxisUtils;
 import prospector.routiduct.api.EnumProtocol;
 import prospector.routiduct.api.IProtocolProvider;
-import reborncore.modcl.BlockCL;
 
 /**
  * Created by Prospector
  */
-public class BlockRelay extends BlockCL implements IProtocolProvider {
+public class BlockRelay extends BlockRD implements IProtocolProvider {
 
 	public static final PropertyBool EAST = PropertyBool.create("east");
 	public static final PropertyBool WEST = PropertyBool.create("west");
@@ -36,7 +35,7 @@ public class BlockRelay extends BlockCL implements IProtocolProvider {
 	private final EnumProtocol protocol;
 
 	public BlockRelay(EnumProtocol protocol) {
-		super(Routiduct.MOD_CL, "relay." + protocol.name.toLowerCase(), Material.IRON);
+		super("relay." + protocol.name.toLowerCase());
 		setHardness(0.5F);
 		setDefaultState(getDefaultState().withProperty(EAST, false).withProperty(WEST, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(UP, false).withProperty(DOWN, false));
 		this.protocol = protocol;
@@ -92,7 +91,7 @@ public class BlockRelay extends BlockCL implements IProtocolProvider {
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 		//		return new AxisAlignedBB(0.125, 0.125, 0.125, 0.875, 0.875, 0.875);
-}
+	}
 
 	public IProperty<Boolean> getProperty(EnumFacing facing) {
 		switch (facing) {

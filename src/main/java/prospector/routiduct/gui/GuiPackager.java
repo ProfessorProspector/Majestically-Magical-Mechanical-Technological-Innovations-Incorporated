@@ -1,3 +1,4 @@
+/*
 package prospector.routiduct.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -8,13 +9,15 @@ import prospector.routiduct.api.Package;
 import prospector.routiduct.block.tiles.TilePackager;
 import prospector.routiduct.container.ContainerPackager;
 
+*/
 /**
  * Created by Prospector
- */
+ *//*
+
 public class GuiPackager extends GuiContainer {
 	public int xSize = 176;
 	public int ySize = 176;
-	RDBuilder builder = new RDBuilder();
+	GuiAssembler builder = new GuiAssembler();
 	TilePackager tile;
 	EntityPlayer player;
 
@@ -45,18 +48,18 @@ public class GuiPackager extends GuiContainer {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		drawTitle();
 		drawString("Inventory", 8, 83, 4210752);
-		builder.drawProgress(this, 100, 100, 47, 36, Package.EnumColour.PURPLE);
+		builder.drawProgress(this, 100, 100, 47, 36, Package.EnumColor.PURPLE);
 	}
 
 	protected void drawTitle() {
-		drawCentredString(I18n.translateToLocal(tile.getBlockType().getUnlocalizedName() + ".name"), 6, 4210752);
+		drawCenteredString(I18n.translateToLocal(tile.getBlockType().getUnlocalizedName() + ".name"), 6, 4210752);
 	}
 
-	protected void drawCentredString(String string, int y, int colour) {
+	protected void drawCenteredString(String string, int y, int colour) {
 		drawString(string, (xSize / 2 - mc.fontRendererObj.getStringWidth(string) / 2), y, colour);
 	}
 
-	protected void drawCentredString(String string, int y, int colour, int modifier) {
+	protected void drawCenteredString(String string, int y, int colour, int modifier) {
 		drawString(string, (xSize / 2 - (mc.fontRendererObj.getStringWidth(string)) / 2) + modifier, y, colour);
 	}
 
@@ -65,3 +68,4 @@ public class GuiPackager extends GuiContainer {
 		GlStateManager.color(1, 1, 1, 1);
 	}
 }
+*/

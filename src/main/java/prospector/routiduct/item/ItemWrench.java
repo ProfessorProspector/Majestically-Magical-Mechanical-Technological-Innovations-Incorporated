@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /**
  * Created by Prospector
  */
-public class ItemWrench extends ItemRoutiductBase {
+public class ItemWrench extends ItemRD {
 
 	public ItemWrench() {
 		super("wrench");
