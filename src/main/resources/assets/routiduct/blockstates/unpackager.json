@@ -1,0 +1,52 @@
+{
+  "multipart": [
+	{
+	  "when": { "facing": "north" },
+	  "apply": { "model": "routiduct:block/unpackager" }
+	},
+	{
+	  "when": { "facing": "south" },
+	  "apply": { "model": "routiduct:block/unpackager", "y": 180 }
+	},
+	{
+	  "when": { "facing": "east" },
+	  "apply": { "model": "routiduct:block/unpackager", "y": 90 }
+	},
+	{
+	  "when": { "facing": "west" },
+	  "apply": { "model": "routiduct:block/unpackager", "y": 270 }
+	},
+	{
+	  "when": { "facing": "up" },
+	  "apply": { "model": "routiduct:block/unpackager", "x": 270 }
+	},
+	{
+	  "when": { "facing": "down" },
+	  "apply": { "model": "routiduct:block/unpackager", "x": 90 }
+	},
+	{
+	  "when": { "facing": "north", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector_flipped" }
+	},
+	{
+	  "when": { "facing": "south", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector", "y": 180 }
+	},
+	{
+	  "when": { "facing": "east", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector", "y": 90 }
+	},
+	{
+	  "when": { "facing": "west", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector_flipped", "y": 270 }
+	},
+	{
+	  "when": { "facing": "up", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector", "x": 270 }
+	},
+	{
+	  "when": { "facing": "down", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector_flipped", "x": 90 }
+	}
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "routiduct:block/packager",
+  "textures": {
+	"interface": "routiduct:block/packager_interface",
+	"side": "routiduct:block/packager_side_pushing",
+	"front": "routiduct:block/packager_front"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "item.routiduct.wrench": "Routiduct Wrench",
+
+  "block.routiduct.routiduct": "Routiduct",
+  "block.routiduct.packager": "Packager",
+  "block.routiduct.unpackager": "Unpackager",
+
+  "color.routiduct.teal": "Teal",
+  "color.routiduct.sky": "Sky",
+  "color.routiduct.blue": "Blue",
+  "color.routiduct.purple": "Purple",
+  "color.routiduct.pink": "Pink",
+  "color.routiduct.red": "Red",
+  "color.routiduct.orange": "Orange",
+  "color.routiduct.yellow": "Yellow",
+  "color.routiduct.lime": "Lime",
+  "color.routiduct.green": "Green",
+  "color.routiduct.black": "Black",
+  "color.routiduct.grey": "Grey",
+  "color.routiduct.silver": "Silver",
+  "color.routiduct.white": "White"
+}

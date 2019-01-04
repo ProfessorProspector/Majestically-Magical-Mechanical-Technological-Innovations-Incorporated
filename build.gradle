@@ -1,74 +1,81 @@
+import net.fabricmc.loom.LoomGradlePlugin
+
 buildscript {
 	repositories {
 		jcenter()
-		maven {url = "http://files.minecraftforge.net/maven"}
+		maven {
+			name = 'Fabric'
+			url = 'http://maven.modmuss50.me/'
+		}
 	}
 	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+		classpath "net.fabricmc:fabric-loom:0.2.0-SNAPSHOT"
 	}
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = mcver + "-" + modver + "-CustomBuild"
+plugins {
+	id 'java'
+	id 'eclipse'
+	id 'idea'
+}
+
+apply plugin: LoomGradlePlugin
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = "io.github.prospector.refinements"
+archivesBaseName = "Refinements"
+version = "1.0.0"
 
 def ENV = System.getenv()
 if (ENV.BUILD_NUMBER) {
-	version = mcver + "-" + modver + "-" + "${System.getenv().BUILD_NUMBER}"
-}
-
-group = prefix + "." + id
-archivesBaseName = jarname
-
-sourceCompatibility = targetCompatibility = "1.8"
-compileJava {
-	sourceCompatibility = targetCompatibility = "1.8"
+	version = version + "-" + "${System.getenv().BUILD_NUMBER}"
 }
 
 minecraft {
-	version = mcver + "-" + forgever
-	runDir = "run"
-	mappings = mcp
-
-	replaceIn "RoutiductConstants.java"
-	replace "@version@", project.version
-}
-
-
-repositories {
-	maven {
-		// HWYLA
-		name "TehNut"
-		url "http://tehnut.info/maven/"
-	}
 }
 
 dependencies {
-	compile hwylaver
+	minecraft "com.mojang:minecraft:18w50a"
+	mappings "net.fabricmc:yarn:18w50a.90"
+	modCompile "net.fabricmc:fabric-loader:0.3.2.91"
+	modCompile "net.fabricmc:fabric:0.1.3.68"
+	modCompile "io.github.prospector.silk:SilkAPI:+"
 }
 
-processResources
-	{
-		inputs.property "modid", id
-		inputs.property "modname", displayname
-		inputs.property "desc", moddesc
-		inputs.property "version", modver
-		inputs.property "forgeversion", mcver + "-" + forgever
-		inputs.property "url", modurl
-		inputs.property "authors", modauthors
-
-		from(sourceSets.main.resources.srcDirs) {
-
-			include 'mcmod.info'
-
-			expand 'modid': id,
-				'modname': displayname,
-				'desc': moddesc,
-				'version': modver,
-				'forgeversion': mcver + "-" + forgever,
-				'url': modurl,
-				'authors': modauthors
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			//This is used when the build is done on a slave node
+			if (project.hasProperty('mavenPass')) {
+				println 'Uploading to remote Maven Repo'
+				repository(url: "http://mavenupload.modmuss50.me/") {
+					authentication(userName: "buildslave", password: project.getProperty('mavenPass'))
+				}
+			} else {
+				//this is when the build is executed on the master node
+				println 'Uploading to local Maven Repo'
+				repository(url: "file:///var/www/maven/")
+			}
+			pom {
+				groupId = project.group
+				version = project.version
+				artifactId = project.archivesBaseName
+				project {
+					name project.archivesBaseName
+					packaging 'jar'
+					description project.archivesBaseName
+					url 'https://github.com/Prospector/Refinements'
+					scm {
+						url 'https://github.com/Prospector/Refinements'
+						connection 'scm:git:git@github.com:Prospector/Refinements.git'
+						developerConnection 'scm:git:git@github.com:Prospector/Refinements.git'
+					}
+				}
+			}
 		}
-
-		from(sourceSets.main.resources.srcDirs) {exclude 'mcmod.info'}
-
 	}
+}

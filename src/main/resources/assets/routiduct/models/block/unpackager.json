@@ -1,148 +1,35 @@
 {
-  "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+  "credit": "Made with Blockbench",
+  "parent": "block/block",
   "textures": {
-    "0": "#unpackager"
+	"unpackager": "routiduct:block/unpackager"
   },
   "elements": [
-    {
-      "name": "Unpackager",
-      "from": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "to": [
-        15.0,
-        15.0,
-        7.0
-      ],
-      "faces": {
-        "north": {
-          "texture": "#0",
-          "uv": [
-            9.0,
-            0.0,
-            16.0,
-            7.0
-          ]
-        },
-        "east": {
-          "texture": "#0",
-          "uv": [
-            0.0,
-            0.0,
-            3.0,
-            7.0
-          ]
-        },
-        "south": {
-          "texture": "#0",
-          "uv": [
-            9.0,
-            0.0,
-            16.0,
-            7.0
-          ]
-        },
-        "west": {
-          "texture": "#0",
-          "uv": [
-            0.0,
-            0.0,
-            3.0,
-            7.0
-          ]
-        },
-        "up": {
-          "texture": "#0",
-          "uv": [
-            0.0,
-            0.0,
-            3.0,
-            7.0
-          ],
-          "rotation": 90
-        },
-        "down": {
-          "texture": "#0",
-          "uv": [
-            0.0,
-            0.0,
-            3.0,
-            7.0
-          ],
-          "rotation": 90
-        }
-      }
-    },
-    {
-      "name": "Extension",
-      "from": [
-        3.0,
-        3.0,
-        0.0
-      ],
-      "to": [
-        13.0,
-        13.0,
-        8.0
-      ],
-      "faces": {
-        "north": {
-          "texture": "#0",
-          "uv": [
-            4.0,
-            0.0,
-            9.0,
-            5.0
-          ]
-        },
-        "east": {
-          "texture": "#0",
-          "uv": [
-            0.0,
-            11.0,
-            4.0,
-            16.0
-          ]
-        },
-        "south": {
-          "texture": "#0",
-          "uv": [
-            4.0,
-            5.0,
-            9.0,
-            10.0
-          ]
-        },
-        "west": {
-          "texture": "#0",
-          "uv": [
-            0.0,
-            11.0,
-            4.0,
-            16.0
-          ]
-        },
-        "up": {
-          "texture": "#0",
-          "uv": [
-            0.0,
-            12.0,
-            5.0,
-            16.0
-          ]
-        },
-        "down": {
-          "texture": "#0",
-          "uv": [
-            0.0,
-            12.0,
-            5.0,
-            16.0
-          ]
-        }
-      }
-    }
+	{
+	  "name": "Unpackager",
+	  "from": [ 1, 1, 1 ],
+	  "to": [ 15, 15, 7 ],
+	  "faces": {
+		"north": { "uv": [ 9, 0, 16, 7 ], "texture": "#unpackager" },
+		"east": { "uv": [ 0, 0, 3, 7 ], "texture": "#unpackager" },
+		"south": { "uv": [ 9, 0, 16, 7 ], "texture": "#unpackager" },
+		"west": { "uv": [ 0, 0, 3, 7 ], "texture": "#unpackager" },
+		"up": { "uv": [ 0, 0, 3, 7 ], "rotation": 90, "texture": "#unpackager" },
+		"down": { "uv": [ 0, 0, 3, 7 ], "rotation": 90, "texture": "#unpackager" }
+	  }
+	},
+	{
+	  "name": "Extension",
+	  "from": [ 3, 3, 0 ],
+	  "to": [ 13, 13, 8 ],
+	  "faces": {
+		"north": { "uv": [ 4, 0, 9, 5 ], "texture": "#unpackager" },
+		"east": { "uv": [ 0, 11, 4, 16 ], "texture": "#unpackager" },
+		"south": { "uv": [ 4, 5, 9, 10 ], "texture": "#unpackager" },
+		"west": { "uv": [ 0, 11, 4, 16 ], "texture": "#unpackager" },
+		"up": { "uv": [ 0, 12, 5, 16 ], "texture": "#unpackager" },
+		"down": { "uv": [ 0, 12, 5, 16 ], "texture": "#unpackager" }
+	  }
+	}
   ]
 }

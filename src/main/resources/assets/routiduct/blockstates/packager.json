@@ -1,0 +1,76 @@
+{
+  "multipart": [
+	{
+	  "when": { "facing": "north", "pushing": false },
+	  "apply": { "model": "routiduct:block/packager_not_pushing" }
+	},
+	{
+	  "when": { "facing": "south", "pushing": false },
+	  "apply": { "model": "routiduct:block/packager_not_pushing", "y": 180 }
+	},
+	{
+	  "when": { "facing": "east", "pushing": false },
+	  "apply": { "model": "routiduct:block/packager_not_pushing", "y": 90 }
+	},
+	{
+	  "when": { "facing": "west", "pushing": false },
+	  "apply": { "model": "routiduct:block/packager_not_pushing", "y": 270 }
+	},
+	{
+	  "when": { "facing": "up", "pushing": false },
+	  "apply": { "model": "routiduct:block/packager_not_pushing", "x": 270 }
+	},
+	{
+	  "when": { "facing": "down", "pushing": false },
+	  "apply": { "model": "routiduct:block/packager_not_pushing", "x": 90 }
+	},
+	{
+	  "when": { "facing": "north", "pushing": true },
+	  "apply": { "model": "routiduct:block/packager_pushing" }
+	},
+	{
+	  "when": { "facing": "south", "pushing": true },
+	  "apply": { "model": "routiduct:block/packager_pushing", "y": 180 }
+	},
+	{
+	  "when": { "facing": "east", "pushing": true },
+	  "apply": { "model": "routiduct:block/packager_pushing", "y": 90 }
+	},
+	{
+	  "when": { "facing": "west", "pushing": true },
+	  "apply": { "model": "routiduct:block/packager_pushing", "y": 270 }
+	},
+	{
+	  "when": { "facing": "up", "pushing": true },
+	  "apply": { "model": "routiduct:block/packager_pushing", "x": 270 }
+	},
+	{
+	  "when": { "facing": "down", "pushing": true },
+	  "apply": { "model": "routiduct:block/packager_pushing", "x": 90 }
+	},
+	{
+	  "when": { "facing": "north", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector_flipped" }
+	},
+	{
+	  "when": { "facing": "south", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector", "y": 180 }
+	},
+	{
+	  "when": { "facing": "east", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector", "y": 90 }
+	},
+	{
+	  "when": { "facing": "west", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector_flipped", "y": 270 }
+	},
+	{
+	  "when": { "facing": "up", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector", "x": 270 }
+	},
+	{
+	  "when": { "facing": "down", "connected": true },
+	  "apply": { "model": "routiduct:block/packager_connector_flipped", "x": 90 }
+	}
+  ]
+}

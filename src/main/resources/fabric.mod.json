@@ -1,0 +1,17 @@
+{
+  "id": "routiduct",
+  "name": "Routiduct",
+  "version": "0.1.0",
+  "side": "universal",
+  "initializers": [
+	"io.github.prospector.routiduct.Routiduct",
+	"io.github.prospector.routiduct.registry.RoutiductRegistry",
+	"io.github.prospector.routiduct.network.RoutiductNetworking",
+	"io.github.prospector.routiduct.container.RoutiductContainers"
+  ],
+  "description": "DUCTS THAT ROUTE",
+  "mixins": {
+	"client": "mixins.routiduct.client.json",
+	"common": "mixins.routiduct.common.json"
+  }
+}

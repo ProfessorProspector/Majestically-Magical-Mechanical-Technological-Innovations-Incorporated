@@ -1,0 +1,123 @@
+{
+  "multipart": [
+	{
+	  "when": {
+		"OR": [
+		  { "direction_1": "east", "direction_2": "west" },
+		  { "direction_1": "west", "direction_2": "east" }
+		]
+	  },
+	  "apply": { "model": "routiduct:block/routiduct_core_straight", "y": 270 }
+	},
+	{
+	  "when": {
+		"OR": [
+		  { "direction_1": "north", "direction_2": "south" },
+		  { "direction_1": "south", "direction_2": "north" }
+		]
+	  },
+	  "apply": { "model": "routiduct:block/routiduct_core_straight" }
+	},
+	{
+	  "when": {
+		"OR": [
+		  { "direction_1": "up", "direction_2": "down" },
+		  { "direction_1": "down", "direction_2": "up" }
+		]
+	  },
+	  "apply": { "model": "routiduct:block/routiduct_core_straight", "x": 90 }
+	},
+	{
+	  "when": {
+		"OR": [
+		  { "direction_1": "up", "direction_2": "north" },
+		  { "direction_1": "up", "direction_2": "south" },
+		  { "direction_1": "up", "direction_2": "east" },
+		  { "direction_1": "up", "direction_2": "west" },
+		  { "direction_1": "up", "direction_2": "none" },
+		  { "direction_1": "down", "direction_2": "north" },
+		  { "direction_1": "down", "direction_2": "south" },
+		  { "direction_1": "down", "direction_2": "east" },
+		  { "direction_1": "down", "direction_2": "west" },
+		  { "direction_1": "down", "direction_2": "none" },
+		  { "direction_1": "north", "direction_2": "up" },
+		  { "direction_1": "north", "direction_2": "down" },
+		  { "direction_1": "north", "direction_2": "east" },
+		  { "direction_1": "north", "direction_2": "west" },
+		  { "direction_1": "north", "direction_2": "none" },
+		  { "direction_1": "south", "direction_2": "up" },
+		  { "direction_1": "south", "direction_2": "down" },
+		  { "direction_1": "south", "direction_2": "east" },
+		  { "direction_1": "south", "direction_2": "west" },
+		  { "direction_1": "south", "direction_2": "none" },
+		  { "direction_1": "east", "direction_2": "north" },
+		  { "direction_1": "east", "direction_2": "south" },
+		  { "direction_1": "east", "direction_2": "up" },
+		  { "direction_1": "east", "direction_2": "down" },
+		  { "direction_1": "east", "direction_2": "none" },
+		  { "direction_1": "west", "direction_2": "north" },
+		  { "direction_1": "west", "direction_2": "south" },
+		  { "direction_1": "west", "direction_2": "up" },
+		  { "direction_1": "west", "direction_2": "down" },
+		  { "direction_1": "west", "direction_2": "none" },
+		  { "direction_1": "none", "direction_2": "north" },
+		  { "direction_1": "none", "direction_2": "south" },
+		  { "direction_1": "none", "direction_2": "up" },
+		  { "direction_1": "none", "direction_2": "down" },
+		  { "direction_1": "none", "direction_2": "east" },
+		  { "direction_1": "none", "direction_2": "west" },
+		  { "direction_1": "none", "direction_2": "none" }
+		]
+	  },
+	  "apply": { "model": "routiduct:block/routiduct_core" }
+	},
+	{
+	  "when": { "direction_1": "east" },
+	  "apply": { "model": "routiduct:block/routiduct_connector_flipped", "y": 270 }
+	},
+	{
+	  "when": { "direction_1": "west" },
+	  "apply": { "model": "routiduct:block/routiduct_connector", "y": 90 }
+	},
+	{
+	  "when": { "direction_1": "north" },
+	  "apply": { "model": "routiduct:block/routiduct_connector", "y": 180 }
+	},
+	{
+	  "when": { "direction_1": "south" },
+	  "apply": { "model": "routiduct:block/routiduct_connector_flipped" }
+	},
+	{
+	  "when": { "direction_1": "up" },
+	  "apply": { "model": "routiduct:block/routiduct_connector_flipped", "x": 90 }
+	},
+	{
+	  "when": { "direction_1": "down" },
+	  "apply": { "model": "routiduct:block/routiduct_connector", "x": 270 }
+	},
+	{
+	  "when": { "direction_2": "up" },
+	  "apply": { "model": "routiduct:block/routiduct_connector_flipped", "x": 90 }
+	},
+	{
+	  "when": { "direction_2": "down" },
+	  "apply": { "model": "routiduct:block/routiduct_connector", "x": 270 }
+	},
+	{
+	  "when": { "direction_2": "east" },
+	  "apply": { "model": "routiduct:block/routiduct_connector_flipped", "y": 270 }
+	},
+	{
+	  "when": { "direction_2": "west" },
+	  "apply": { "model": "routiduct:block/routiduct_connector", "y": 90 }
+	},
+	{
+	  "when": { "direction_2": "north" },
+	  "apply": { "model": "routiduct:block/routiduct_connector", "y": 180 }
+	},
+	{
+	  "when": { "direction_2": "south" },
+	  "apply": { "model": "routiduct:block/routiduct_connector_flipped" }
+	}
+  ]
+}
