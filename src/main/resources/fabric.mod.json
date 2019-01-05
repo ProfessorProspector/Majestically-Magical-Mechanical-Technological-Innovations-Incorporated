@@ -1,7 +1,7 @@
 {
   "id": "routiduct",
   "name": "Routiduct",
-  "version": "0.1.0",
+  "version": "$version",
   "side": "universal",
   "initializers": [
 	"io.github.prospector.routiduct.Routiduct",

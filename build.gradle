@@ -46,6 +46,16 @@ dependencies {
 	modCompile "io.github.prospector.silk:SilkAPI:+"
 }
 
+processResources {
+	from(sourceSets.main.resources.srcDirs) {
+		include 'fabric.mod.json'
+		expand version: project.version
+	}
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'fabric.mod.json'
+	}
+}
+
 uploadArchives {
 	repositories {
 		mavenDeployer {
